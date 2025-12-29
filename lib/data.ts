@@ -1,642 +1,270 @@
 import { Destination, Hotel, Activity, Restaurant } from "./types";
 
-// Mock Switrus Holidays Partner Destinations
+// Mock International Packages
 export const destinations: Destination[] = [
     {
-        id: "kerala",
-        name: "Kerala - God's Own Country",
-        description: "Backwaters, tea gardens, and pristine beaches",
-        image: "/destinations/kerala.jpg",
-        popularMonths: ["October", "November", "December", "January", "February"],
-        averageBudget: { min: 25000, max: 80000 },
+        id: "europe_pkg",
+        name: "Grand Europe Tour",
+        description: "Experience the best of France, Italy, and Switzerland",
+        image: "/destinations/europe.jpg",
+        popularMonths: ["May", "June", "July", "August", "September"],
+        averageBudget: { min: 150000, max: 400000 },
+        packages: [
+            { name: "Economy", price: 150000, description: "Hostels, Public Transport, Walking Tours", inclusions: ["Hostels", "Walking Tours"] },
+            { name: "Standard", price: 250000, description: "3-Star Hotels, City Pass, Guided Tours", inclusions: ["3-Star Hotels", "City Pass"] },
+            { name: "Luxury", price: 400000, description: "4-5 Star Hotels, Private Transfers, Fine Dining", inclusions: ["Luxury Hotels", "Private Transfers"] }
+        ]
     },
     {
-        id: "goa",
-        name: "Goa - Beach Paradise",
-        description: "Sun, sand, nightlife, and Portuguese heritage",
-        image: "/destinations/goa.jpg",
-        popularMonths: ["November", "December", "January", "February"],
-        averageBudget: { min: 20000, max: 60000 },
+        id: "turkey_pkg",
+        name: "Turkey - East Meets West",
+        description: "Istanbul, Cappadocia history, and Mediterranean beaches",
+        image: "/destinations/turkey.jpg",
+        popularMonths: ["April", "May", "September", "October"],
+        averageBudget: { min: 80000, max: 200000 },
+        packages: [
+            { name: "Economy", price: 80000, description: "Budget Caves, Shared Shuttles", inclusions: ["Cave Hostels", "Shared Shuttle"] },
+            { name: "Standard", price: 140000, description: "Boutique Cave Hotels, Small Group Tours", inclusions: ["Boutique Hotel", "Group Tours"] },
+            { name: "Luxury", price: 200000, description: "Luxury Suites, Private Balloon Ride", inclusions: ["Luxury Suites", "Balloon Ride"] }
+        ]
     },
     {
-        id: "rajasthan",
-        name: "Rajasthan - Land of Kings",
-        description: "Forts, palaces, deserts, and royal heritage",
-        image: "/destinations/rajasthan.jpg",
-        popularMonths: ["October", "November", "December", "January", "February"],
-        averageBudget: { min: 30000, max: 100000 },
+        id: "greece_pkg",
+        name: "Greece - Myths & Islands",
+        description: "Athens ancient history and Santorini sunsets",
+        image: "/destinations/greece.jpg",
+        popularMonths: ["May", "June", "September", "October"],
+        averageBudget: { min: 100000, max: 250000 },
+        packages: [
+            { name: "Economy", price: 100000, description: "Basic Ferry, Local Guesthouses", inclusions: ["Ferry Tickets", "Guesthouses"] },
+            { name: "Standard", price: 180000, description: "Fast Ferry, Caldera View Hotels", inclusions: ["Fast Ferry", "View Hotels"] },
+            { name: "Luxury", price: 250000, description: "Private Yacht, 5-Star Santorinian Suites", inclusions: ["Private Yacht", "5-Star Suites"] }
+        ]
     },
     {
-        id: "kashmir",
-        name: "Kashmir - Paradise on Earth",
-        description: "Snow-capped mountains, valleys, and Dal Lake",
-        image: "/destinations/kashmir.jpg",
+        id: "paris_pkg",
+        name: "Paris - City of Light",
+        description: "Romance, art, fashion, and culinary delights",
+        image: "/destinations/paris.jpg",
         popularMonths: ["April", "May", "June", "September", "October"],
-        averageBudget: { min: 35000, max: 90000 },
+        averageBudget: { min: 90000, max: 220000 },
+        packages: [
+            { name: "Economy", price: 90000, description: "Metro Access Hotels, Self-Guided", inclusions: ["Metro Hotel", "Museum Pass"] },
+            { name: "Standard", price: 150000, description: "Central Hotels, Seine Cruise", inclusions: ["Central Hotel", "Seine Cruise"] },
+            { name: "Luxury", price: 220000, description: "Eiffel View Suites, Michelin Dining", inclusions: ["Eiffel Suites", "Michelin Dinner"] }
+        ]
     },
     {
-        id: "ladakh",
-        name: "Ladakh - Land of High Passes",
-        description: "Monasteries, high-altitude lakes, and adventure",
-        image: "/destinations/ladakh.jpg",
-        popularMonths: ["June", "July", "August", "September"],
-        averageBudget: { min: 40000, max: 120000 },
+        id: "swiss_pkg",
+        name: "Switzerland - Alpine Dream",
+        description: "Majestic Alps, pristine lakes, and Swiss chocolates",
+        image: "/destinations/swiss.jpg",
+        popularMonths: ["June", "July", "August", "December", "January"],
+        averageBudget: { min: 120000, max: 300000 },
+        packages: [
+            { name: "Economy", price: 120000, description: "Swiss Pass 2nd Class, Chalet Hostels", inclusions: ["Swiss Pass 2nd", "Hostels"] },
+            { name: "Standard", price: 200000, description: "Swiss Pass 1st Class, 3-Star Hotels", inclusions: ["Swiss Pass 1st", "3-Star Hotels"] },
+            { name: "Luxury", price: 300000, description: "Private Drivers, Lake View 5-Star", inclusions: ["Private Driver", "5-Star Lake View"] }
+        ]
+    },
+    {
+        id: "bali_pkg",
+        name: "Bali - Island of Gods",
+        description: "Tropical beaches, lush rice terraces, and temples",
+        image: "/destinations/bali.jpg",
+        popularMonths: ["April", "May", "June", "September"],
+        averageBudget: { min: 60000, max: 150000 },
+        packages: [
+            { name: "Economy", price: 60000, description: "Homestays, Scooter Rental", inclusions: ["Homestay", "Scooter"] },
+            { name: "Standard", price: 100000, description: "Private Villas, Car with Driver", inclusions: ["Private Villa", "Driver"] },
+            { name: "Luxury", price: 150000, description: "Luxury Beachfront Resorts, Spa Package", inclusions: ["Luxury Resort", "Daily Spa"] }
+        ]
+    },
+    {
+        id: "thailand_pkg",
+        name: "Thailand - Land of Smiles",
+        description: "Bangkok bustle, Chiang Mai culture, and Islands",
+        image: "/destinations/thailand.jpg",
+        popularMonths: ["November", "December", "January", "February"],
+        averageBudget: { min: 50000, max: 120000 },
+        packages: [
+            { name: "Economy", price: 50000, description: "Street Food Tours, Hostels", inclusions: ["Street Food", "Hostels"] },
+            { name: "Standard", price: 80000, description: "4-Star Hotels, Island Speedboats", inclusions: ["4-Star Hotel", "Speedboat"] },
+            { name: "Luxury", price: 120000, description: "Rooftop Bars, Private Island Resorts", inclusions: ["Rooftop Bar", "Private Island"] }
+        ]
+    },
+    {
+        id: "dubai_pkg",
+        name: "Dubai - Future City",
+        description: "Skyscrapers, desert safaris, and luxury shopping",
+        image: "/destinations/dubai.jpg",
+        popularMonths: ["November", "December", "January", "February", "March"],
+        averageBudget: { min: 70000, max: 200000 },
+        packages: [
+            { name: "Economy", price: 70000, description: "Citymax Hotels, Metro", inclusions: ["City Hotel", "Metro Card"] },
+            { name: "Standard", price: 120000, description: "Marina View Hotels, Desert Safari", inclusions: ["Marina Hotel", "Safari"] },
+            { name: "Luxury", price: 200000, description: "Palm Atlantis, Helicopter Tour", inclusions: ["Atlantis Stay", "Heli Tour"] }
+        ]
+    },
+    {
+        id: "singapore_pkg",
+        name: "Singapore - Garden City",
+        description: "Futuristic gardens, diverse food, and vibrant culture",
+        image: "/destinations/singapore.jpg",
+        popularMonths: ["February", "March", "April"],
+        averageBudget: { min: 80000, max: 180000 },
+        packages: [
+            { name: "Economy", price: 80000, description: "Pod Hotels, Hawker Centers", inclusions: ["Pod Hotel", "Hawker Food"] },
+            { name: "Standard", price: 130000, description: "Orchard Road Hotels, Sentosa Pass", inclusions: ["Orchard Hotel", "Sentosa Pass"] },
+            { name: "Luxury", price: 180000, description: "Marina Bay Sands, Private Tours", inclusions: ["MBS Stay", "Private Guide"] }
+        ]
+    },
+    {
+        id: "maldives_pkg",
+        name: "Maldives - Tropical Paradise",
+        description: "Overwater villas, crystal clear water, and relaxation",
+        image: "/destinations/maldives.jpg",
+        popularMonths: ["November", "December", "January", "February", "March"],
+        averageBudget: { min: 100000, max: 350000 },
+        packages: [
+            { name: "Economy", price: 100000, description: "Local Island Guesthouses", inclusions: ["Guesthouse", "Public ferry"] },
+            { name: "Standard", price: 200000, description: "Beach Villas, Speedboat Transfer", inclusions: ["Beach Villa", "Speedboat"] },
+            { name: "Luxury", price: 350000, description: "Overwater Villas, Seaplane", inclusions: ["Water Villa", "Seaplane"] }
+        ]
     },
 ];
 
-// Mock Switrus Partner Hotels
 export const hotels: Hotel[] = [
-    // Kerala Hotels
-    {
-        id: "h1",
-        name: "Vivanta Cochin",
-        destination: "kerala",
-        pricePerNight: 8500,
-        rating: 4.5,
-        amenities: ["Pool", "Spa", "Restaurant", "Wi-Fi", "Parking"],
-        type: "luxury",
-        image: "/hotels/vivanta-cochin.jpg",
-    },
-    {
-        id: "h2",
-        name: "Spice Garden Resort Thekkady",
-        destination: "kerala",
-        pricePerNight: 5000,
-        rating: 4.2,
-        amenities: ["Restaurant", "Wi-Fi", "Garden", "Parking"],
-        type: "mid-range",
-        image: "/hotels/spice-garden.jpg",
-    },
-    {
-        id: "h3",
-        name: "Alleppey Houseboat",
-        destination: "kerala",
-        pricePerNight: 12000,
-        rating: 4.7,
-        amenities: ["Private Deck", "Chef", "AC", "Scenic Views"],
-        type: "luxury",
-        image: "/hotels/houseboat.jpg",
-    },
-    {
-        id: "h4",
-        name: "Budget Inn Kochi",
-        destination: "kerala",
-        pricePerNight: 3000,
-        rating: 3.8,
-        amenities: ["Wi-Fi", "Breakfast", "Parking"],
-        type: "budget",
-        image: "/hotels/budget-inn.jpg",
-    },
+    // Europe
+    { id: "h_eu1", name: "Novotel Paris Centre", destination: "europe_pkg", pricePerNight: 12000, rating: 4.2, amenities: ["City View", "Metro Access"], type: "mid-range", image: "/hotels/novotel.jpg" },
+    { id: "h_eu2", name: "Hotel Danieli Venice", destination: "europe_pkg", pricePerNight: 45000, rating: 4.8, amenities: ["Canal View", "Luxury", "History"], type: "luxury", image: "/hotels/danieli.jpg" },
+    { id: "h_eu3", name: "Ibis Amsterdam Centre", destination: "europe_pkg", pricePerNight: 8000, rating: 3.8, amenities: ["Central Station", "Wifi"], type: "budget", image: "/hotels/ibis.jpg" },
 
-    // Goa Hotels
-    {
-        id: "h5",
-        name: "Taj Exotica Goa",
-        destination: "goa",
-        pricePerNight: 15000,
-        rating: 4.8,
-        amenities: ["Beach Access", "Pool", "Spa", "Multiple Restaurants", "Wi-Fi"],
-        type: "luxury",
-        image: "/hotels/taj-goa.jpg",
-    },
-    {
-        id: "h6",
-        name: "Baga Beach Resort",
-        destination: "goa",
-        pricePerNight: 4500,
-        rating: 4.0,
-        amenities: ["Pool", "Restaurant", "Beach Proximity", "Wi-Fi"],
-        type: "mid-range",
-        image: "/hotels/baga-resort.jpg",
-    },
-    {
-        id: "h7",
-        name: "Anjuna Budget Stay",
-        destination: "goa",
-        pricePerNight: 2500,
-        rating: 3.5,
-        amenities: ["Wi-Fi", "Breakfast", "Beach Access"],
-        type: "budget",
-        image: "/hotels/anjuna-budget.jpg",
-    },
+    // Turkey
+    { id: "h_tr1", name: "Sultan Cave Suites", destination: "turkey_pkg", pricePerNight: 15000, rating: 4.7, amenities: ["Cave Room", "Rooftop View"], type: "luxury", image: "/hotels/cave.jpg" },
+    { id: "h_tr2", name: "Pera Palace Istanbul", destination: "turkey_pkg", pricePerNight: 20000, rating: 4.6, amenities: ["Historic", "Spa", "Central"], type: "luxury", image: "/hotels/pera.jpg" },
+    { id: "h_tr3", name: "Antique Stone House", destination: "turkey_pkg", pricePerNight: 5000, rating: 4.0, amenities: ["Authentic", "Breakfast"], type: "budget", image: "/hotels/stone.jpg" },
 
-    // Rajasthan Hotels
-    {
-        id: "h8",
-        name: "Rambagh Palace Jaipur",
-        destination: "rajasthan",
-        pricePerNight: 20000,
-        rating: 4.9,
-        amenities: ["Heritage Property", "Pool", "Spa", "Fine Dining", "Garden"],
-        type: "luxury",
-        image: "/hotels/rambagh.jpg",
-    },
-    {
-        id: "h9",
-        name: "Haveli Heritage Udaipur",
-        destination: "rajasthan",
-        pricePerNight: 6000,
-        rating: 4.3,
-        amenities: ["Lake View", "Restaurant", "Rooftop", "Wi-Fi"],
-        type: "mid-range",
-        image: "/hotels/haveli-udaipur.jpg",
-    },
-    {
-        id: "h10",
-        name: "Desert Camp Jaisalmer",
-        destination: "rajasthan",
-        pricePerNight: 3500,
-        rating: 4.0,
-        amenities: ["Cultural Show", "Camel Safari", "Meals", "Bonfire"],
-        type: "budget",
-        image: "/hotels/desert-camp.jpg",
-    },
+    // Greece
+    { id: "h_gr1", name: "Cavo Tagoo Mykonos", destination: "greece_pkg", pricePerNight: 50000, rating: 4.9, amenities: ["Private Pool", "Sunset View"], type: "luxury", image: "/hotels/cavo.jpg" },
+    { id: "h_gr2", name: "Plaka Hotel Athens", destination: "greece_pkg", pricePerNight: 10000, rating: 4.3, amenities: ["Acropolis View", "Rooftop"], type: "mid-range", image: "/hotels/plaka.jpg" },
 
-    // Kashmir Hotels
-    {
-        id: "h11",
-        name: "The LaLiT Grand Palace Srinagar",
-        destination: "kashmir",
-        pricePerNight: 12000,
-        rating: 4.6,
-        amenities: ["Dal Lake View", "Spa", "Restaurant", "Garden", "Wi-Fi"],
-        type: "luxury",
-        image: "/hotels/lalit-srinagar.jpg",
-    },
-    {
-        id: "h12",
-        name: "Houseboat Dal Lake",
-        destination: "kashmir",
-        pricePerNight: 4000,
-        rating: 4.4,
-        amenities: ["Lake View", "Private Deck", "Meals", "Shikara Ride"],
-        type: "mid-range",
-        image: "/hotels/kashmir-houseboat.jpg",
-    },
-    {
-        id: "h13",
-        name: "Gulmarg Alpine Resort",
-        destination: "kashmir",
-        pricePerNight: 5500,
-        rating: 4.2,
-        amenities: ["Mountain View", "Restaurant", "Heating", "Wi-Fi"],
-        type: "mid-range",
-        image: "/hotels/gulmarg-resort.jpg",
-    },
+    // Paris
+    { id: "h_pa1", name: "Pullman Tour Eiffel", destination: "paris_pkg", pricePerNight: 18000, rating: 4.4, amenities: ["Eiffel View", "Gym"], type: "luxury", image: "/hotels/pullman.jpg" },
+    { id: "h_pa2", name: "Hotel Saint-Louis", destination: "paris_pkg", pricePerNight: 9000, rating: 4.0, amenities: ["Marais District", "Charm"], type: "mid-range", image: "/hotels/stlouis.jpg" },
 
-    // Ladakh Hotels
-    {
-        id: "h14",
-        name: "The Grand Dragon Ladakh",
-        destination: "ladakh",
-        pricePerNight: 10000,
-        rating: 4.5,
-        amenities: ["Mountain View", "Restaurant", "Oxygen Support", "Wi-Fi", "Parking"],
-        type: "luxury",
-        image: "/hotels/grand-dragon.jpg",
-    },
-    {
-        id: "h15",
-        name: "Leh Boutique Hotel",
-        destination: "ladakh",
-        pricePerNight: 4500,
-        rating: 4.1,
-        amenities: ["Rooftop", "Restaurant", "Wi-Fi", "Parking"],
-        type: "mid-range",
-        image: "/hotels/leh-boutique.jpg",
-    },
-    {
-        id: "h16",
-        name: "Nubra Valley Camps",
-        destination: "ladakh",
-        pricePerNight: 3000,
-        rating: 3.9,
-        amenities: ["Valley View", "Meals", "Bonfire", "Adventure Activities"],
-        type: "budget",
-        image: "/hotels/nubra-camps.jpg",
-    },
+    // Switzerland
+    { id: "h_sw1", name: "Badrutt's Palace", destination: "swiss_pkg", pricePerNight: 60000, rating: 4.9, amenities: ["Lake View", "Luxury Spa"], type: "luxury", image: "/hotels/badrutt.jpg" },
+    { id: "h_sw2", name: "Hotel Interlaken", destination: "swiss_pkg", pricePerNight: 15000, rating: 4.2, amenities: ["Mountain View", "Central"], type: "mid-range", image: "/hotels/interlaken.jpg" },
+
+    // Bali
+    { id: "h_ba1", name: "Ayana Resort", destination: "bali_pkg", pricePerNight: 18000, rating: 4.7, amenities: ["Rock Bar", "Pools", "Spa"], type: "luxury", image: "/hotels/ayana.jpg" },
+    { id: "h_ba2", name: "Ubud Village Hotel", destination: "bali_pkg", pricePerNight: 6000, rating: 4.3, amenities: ["Rice Fields", "Culture"], type: "mid-range", image: "/hotels/ubud.jpg" },
+
+    // Thailand
+    { id: "h_th1", name: "Lebua at State Tower", destination: "thailand_pkg", pricePerNight: 12000, rating: 4.6, amenities: ["Sky Bar", "City View"], type: "luxury", image: "/hotels/lebua.jpg" },
+    { id: "h_th2", name: "Holiday Inn Phuket", destination: "thailand_pkg", pricePerNight: 5000, rating: 4.1, amenities: ["Beachfront", "Family"], type: "mid-range", image: "/hotels/holidayinn.jpg" },
+
+    // Dubai
+    { id: "h_du1", name: "Atlantis The Palm", destination: "dubai_pkg", pricePerNight: 35000, rating: 4.8, amenities: ["Waterpark", "Aquarium"], type: "luxury", image: "/hotels/atlantis.jpg" },
+    { id: "h_du2", name: "Rove Downtown", destination: "dubai_pkg", pricePerNight: 6000, rating: 4.4, amenities: ["Burj View", "Hip"], type: "mid-range", image: "/hotels/rove.jpg" },
+
+    // Singapore
+    { id: "h_si1", name: "Marina Bay Sands", destination: "singapore_pkg", pricePerNight: 40000, rating: 4.8, amenities: ["Infinity Pool", "Casino"], type: "luxury", image: "/hotels/mbs.jpg" },
+    { id: "h_si2", name: "Hotel Boss", destination: "singapore_pkg", pricePerNight: 7000, rating: 3.9, amenities: ["Pool", "City Access"], type: "budget", image: "/hotels/boss.jpg" },
+
+    // Maldives
+    { id: "h_ma1", name: "Soneva Jani", destination: "maldives_pkg", pricePerNight: 150000, rating: 5.0, amenities: ["Water Slide", "Stargazing"], type: "luxury", image: "/hotels/soneva.jpg" },
+    { id: "h_ma2", name: "Hard Rock Hotel", destination: "maldives_pkg", pricePerNight: 25000, rating: 4.5, amenities: ["Music", "Water Sports"], type: "luxury", image: "/hotels/hardrock.jpg" },
 ];
 
-// Mock Switrus Partner Activities
 export const activities: Activity[] = [
-    // Kerala Activities
-    {
-        id: "a1",
-        name: "Alleppey Backwater Cruise",
-        destination: "kerala",
-        price: 5000,
-        duration: "8 hours",
-        category: "nature",
-        description: "Full day houseboat cruise through scenic backwaters",
-        bestTimeOfDay: "morning",
-    },
-    {
-        id: "a2",
-        name: "Munnar Tea Plantation Tour",
-        destination: "kerala",
-        price: 2000,
-        duration: "4 hours",
-        category: "nature",
-        description: "Guided tour of lush tea gardens with tasting session",
-        bestTimeOfDay: "morning",
-    },
-    {
-        id: "a3",
-        name: "Kathakali Dance Show",
-        destination: "kerala",
-        price: 1500,
-        duration: "2 hours",
-        category: "culture",
-        description: "Traditional Kerala classical dance performance",
-        bestTimeOfDay: "evening",
-    },
-    {
-        id: "a4",
-        name: "Ayurvedic Spa Experience",
-        destination: "kerala",
-        price: 3500,
-        duration: "3 hours",
-        category: "relaxation",
-        description: "Authentic Ayurvedic massage and wellness treatment",
-        bestTimeOfDay: "afternoon",
-    },
-    {
-        id: "a5",
-        name: "Fort Kochi Heritage Walk",
-        destination: "kerala",
-        price: 800,
-        duration: "3 hours",
-        category: "culture",
-        description: "Explore colonial architecture and Chinese fishing nets",
-        bestTimeOfDay: "morning",
-    },
+    // Europe
+    { id: "a_eu1", name: "Eiffel Tower Summit", destination: "europe_pkg", price: 2500, duration: "3 hours", category: "culture", description: "Top floor access with champagne", bestTimeOfDay: "evening" },
+    { id: "a_eu2", name: "Gondola Ride in Venice", destination: "europe_pkg", price: 8000, duration: "1 hour", category: "relaxation", description: "Private gondola through canals", bestTimeOfDay: "afternoon" },
+    { id: "a_eu3", name: "Colosseum Tour", destination: "europe_pkg", price: 4000, duration: "3 hours", category: "culture", description: "Ancient Rome guided walking tour", bestTimeOfDay: "morning" },
 
-    // Goa Activities
-    {
-        id: "a6",
-        name: "Water Sports at Baga Beach",
-        destination: "goa",
-        price: 3000,
-        duration: "2 hours",
-        category: "adventure",
-        description: "Parasailing, jet skiing, and banana boat rides",
-        bestTimeOfDay: "morning",
-    },
-    {
-        id: "a7",
-        name: "Old Goa Churches Tour",
-        destination: "goa",
-        price: 1000,
-        duration: "4 hours",
-        category: "culture",
-        description: "Visit UNESCO World Heritage churches and cathedrals",
-        bestTimeOfDay: "morning",
-    },
-    {
-        id: "a8",
-        name: "Sunset Cruise on Mandovi River",
-        destination: "goa",
-        price: 1500,
-        duration: "2 hours",
-        category: "relaxation",
-        description: "Romantic river cruise with live music and dinner",
-        bestTimeOfDay: "evening",
-    },
-    {
-        id: "a9",
-        name: "Anjuna Flea Market Shopping",
-        destination: "goa",
-        price: 500,
-        duration: "3 hours",
-        category: "culture",
-        description: "Shop for handicrafts, jewelry, and souvenirs",
-        bestTimeOfDay: "afternoon",
-    },
-    {
-        id: "a10",
-        name: "Beach Party at Tito's",
-        destination: "goa",
-        price: 2000,
-        duration: "4 hours",
-        category: "nightlife",
-        description: "Experience Goa's famous nightlife and beach clubs",
-        bestTimeOfDay: "evening",
-    },
+    // Turkey
+    { id: "a_tr1", name: "Cappadocia Hot Air Balloon", destination: "turkey_pkg", price: 15000, duration: "3 hours", category: "adventure", description: "Sunrise flight over fairy chimneys", bestTimeOfDay: "morning" },
+    { id: "a_tr2", name: "Blue Mosque Visit", destination: "turkey_pkg", price: 0, duration: "1 hour", category: "culture", description: "Iconic Ottoman architecture", bestTimeOfDay: "morning" },
 
-    // Rajasthan Activities
-    {
-        id: "a11",
-        name: "Amber Fort Sound & Light Show",
-        destination: "rajasthan",
-        price: 1200,
-        duration: "1.5 hours",
-        category: "culture",
-        description: "Evening spectacular at historic Amber Fort",
-        bestTimeOfDay: "evening",
-    },
-    {
-        id: "a12",
-        name: "Camel Safari in Thar Desert",
-        destination: "rajasthan",
-        price: 2500,
-        duration: "3 hours",
-        category: "adventure",
-        description: "Experience desert life with camel ride and cultural program",
-        bestTimeOfDay: "afternoon",
-    },
-    {
-        id: "a13",
-        name: "City Palace Jaipur Tour",
-        destination: "rajasthan",
-        price: 800,
-        duration: "2 hours",
-        category: "culture",
-        description: "Explore the royal residence and museum",
-        bestTimeOfDay: "morning",
-    },
-    {
-        id: "a14",
-        name: "Boat Ride on Lake Pichola",
-        destination: "rajasthan",
-        price: 1500,
-        duration: "1 hour",
-        category: "relaxation",
-        description: "Scenic boat ride with views of Lake Palace",
-        bestTimeOfDay: "evening",
-    },
-    {
-        id: "a15",
-        name: "Rajasthani Cultural Dinner",
-        destination: "rajasthan",
-        price: 2000,
-        duration: "3 hours",
-        category: "food",
-        description: "Traditional Rajasthani thali with folk performances",
-        bestTimeOfDay: "evening",
-    },
+    // Greece
+    { id: "a_gr1", name: "Oia Sunset View", destination: "greece_pkg", price: 0, duration: "2 hours", category: "relaxation", description: "Famous Santorini sunset spot", bestTimeOfDay: "evening" },
+    { id: "a_gr2", name: "Acropolis Tour", destination: "greece_pkg", price: 3000, duration: "3 hours", category: "culture", description: "Parthenon and ancient citadel", bestTimeOfDay: "morning" },
 
-    // Kashmir Activities
-    {
-        id: "a16",
-        name: "Shikara Ride on Dal Lake",
-        destination: "kashmir",
-        price: 1000,
-        duration: "1 hour",
-        category: "relaxation",
-        description: "Peaceful boat ride on the iconic Dal Lake",
-        bestTimeOfDay: "morning",
-    },
-    {
-        id: "a17",
-        name: "Gulmarg Gondola Ride",
-        destination: "kashmir",
-        price: 3500,
-        duration: "2 hours",
-        category: "adventure",
-        description: "World's highest cable car with stunning mountain views",
-        bestTimeOfDay: "morning",
-    },
-    {
-        id: "a18",
-        name: "Mughal Gardens Tour",
-        destination: "kashmir",
-        price: 800,
-        duration: "3 hours",
-        category: "nature",
-        description: "Visit Shalimar Bagh, Nishat Bagh, and Chashme Shahi",
-        bestTimeOfDay: "afternoon",
-    },
-    {
-        id: "a19",
-        name: "Skiing at Gulmarg",
-        destination: "kashmir",
-        price: 5000,
-        duration: "4 hours",
-        category: "adventure",
-        description: "Experience world-class skiing and snowboarding",
-        bestTimeOfDay: "morning",
-    },
-    {
-        id: "a20",
-        name: "Kashmiri Wazwan Dinner",
-        destination: "kashmir",
-        price: 2500,
-        duration: "2 hours",
-        category: "food",
-        description: "Traditional multi-course Kashmiri feast",
-        bestTimeOfDay: "evening",
-    },
+    // Paris
+    { id: "a_pa1", name: "Louvre Museum", destination: "paris_pkg", price: 1800, duration: "4 hours", category: "culture", description: "See the Mona Lisa and vast art", bestTimeOfDay: "morning" },
+    { id: "a_pa2", name: "Seine River Cruise", destination: "paris_pkg", price: 1500, duration: "1.5 hours", category: "relaxation", description: "Sightseeing cruise by night", bestTimeOfDay: "evening" },
 
-    // Ladakh Activities
-    {
-        id: "a21",
-        name: "Pangong Lake Excursion",
-        destination: "ladakh",
-        price: 6000,
-        duration: "Full day",
-        category: "nature",
-        description: "Visit the stunning blue Pangong Tso lake",
-        bestTimeOfDay: "morning",
-    },
-    {
-        id: "a22",
-        name: "Monastery Circuit Tour",
-        destination: "ladakh",
-        price: 2000,
-        duration: "6 hours",
-        category: "culture",
-        description: "Visit Thiksey, Hemis, and Shey monasteries",
-        bestTimeOfDay: "morning",
-    },
-    {
-        id: "a23",
-        name: "River Rafting on Zanskar",
-        destination: "ladakh",
-        price: 3500,
-        duration: "4 hours",
-        category: "adventure",
-        description: "Thrilling white water rafting experience",
-        bestTimeOfDay: "morning",
-    },
-    {
-        id: "a24",
-        name: "Nubra Valley Camel Safari",
-        destination: "ladakh",
-        price: 1500,
-        duration: "2 hours",
-        category: "adventure",
-        description: "Ride Bactrian camels in the sand dunes",
-        bestTimeOfDay: "afternoon",
-    },
-    {
-        id: "a25",
-        name: "Stargazing Experience",
-        destination: "ladakh",
-        price: 2000,
-        duration: "3 hours",
-        category: "nature",
-        description: "Clear night sky viewing with expert guidance",
-        bestTimeOfDay: "evening",
-    },
+    // Switzerland
+    { id: "a_sw1", name: "Jungfraujoch Train", destination: "swiss_pkg", price: 15000, duration: "6 hours", category: "adventure", description: "Top of Europe train journey", bestTimeOfDay: "morning" },
+    { id: "a_sw2", name: "Lake Brienz Boat", destination: "swiss_pkg", price: 3000, duration: "2 hours", category: "nature", description: "Turquoise water cruise", bestTimeOfDay: "afternoon" },
+
+    // Bali
+    { id: "a_ba1", name: "Uluwatu Temple & Kechak", destination: "bali_pkg", price: 1500, duration: "3 hours", category: "culture", description: "Cliff temple with fire dance", bestTimeOfDay: "evening" },
+    { id: "a_ba2", name: "Tegalalang Rice Terrace", destination: "bali_pkg", price: 500, duration: "2 hours", category: "nature", description: "Famous green rice paddies swing", bestTimeOfDay: "morning" },
+
+    // Thailand
+    { id: "a_th1", name: "Phi Phi Island Tour", destination: "thailand_pkg", price: 4000, duration: "8 hours", category: "adventure", description: "Speedboat tour to Maya Bay", bestTimeOfDay: "morning" },
+    { id: "a_th2", name: "Wat Arun Visit", destination: "thailand_pkg", price: 200, duration: "1 hour", category: "culture", description: "Temple of Dawn by the river", bestTimeOfDay: "afternoon" },
+
+    // Dubai
+    { id: "a_du1", name: "Burj Khalifa At The Top", destination: "dubai_pkg", price: 3500, duration: "2 hours", category: "culture", description: "World's highest observation deck", bestTimeOfDay: "evening" },
+    { id: "a_du2", name: "Desert Safari", destination: "dubai_pkg", price: 3000, duration: "6 hours", category: "adventure", description: "Dune bashing and BBQ dinner", bestTimeOfDay: "afternoon" },
+
+    // Singapore
+    { id: "a_si1", name: "Gardens by the Bay", destination: "singapore_pkg", price: 2000, duration: "3 hours", category: "nature", description: "Cloud Forest and Supertrees", bestTimeOfDay: "evening" },
+    { id: "a_si2", name: "Universal Studios", destination: "singapore_pkg", price: 6000, duration: "Full Day", category: "adventure", description: "Theme park on Sentosa Island", bestTimeOfDay: "morning" },
+
+    // Maldives
+    { id: "a_ma1", name: "Snorkeling Safari", destination: "maldives_pkg", price: 4000, duration: "3 hours", category: "adventure", description: "Swim with turtles and rays", bestTimeOfDay: "morning" },
+    { id: "a_ma2", name: "Sunset Dolphin Cruise", destination: "maldives_pkg", price: 5000, duration: "2 hours", category: "nature", description: "Spot dolphins at golden hour", bestTimeOfDay: "evening" },
 ];
 
-// Mock Switrus Partner Restaurants
 export const restaurants: Restaurant[] = [
-    // Kerala Restaurants
-    {
-        id: "r1",
-        name: "Malabar Cafe",
-        destination: "kerala",
-        cuisine: "Kerala Seafood",
-        priceRange: "₹₹",
-        specialty: "Karimeen Pollichathu",
-        mealType: "lunch",
-    },
-    {
-        id: "r2",
-        name: "Dhe Puttu",
-        destination: "kerala",
-        cuisine: "Traditional Kerala",
-        priceRange: "₹",
-        specialty: "Variety Puttu",
-        mealType: "breakfast",
-    },
-    {
-        id: "r3",
-        name: "Vivanta Multi-Cuisine",
-        destination: "kerala",
-        cuisine: "Multi-Cuisine",
-        priceRange: "₹₹₹",
-        specialty: "Continental & Indian",
-        mealType: "dinner",
-    },
+    // Europe
+    { id: "r_eu1", name: "Le Jules Verne", destination: "europe_pkg", cuisine: "French", priceRange: "₹₹₹", specialty: "Fine Dining", mealType: "dinner" },
+    { id: "r_eu2", name: "Trattoria Al Gato", destination: "europe_pkg", cuisine: "Italian", priceRange: "₹₹", specialty: "Pasta", mealType: "lunch" },
 
-    // Goa Restaurants
-    {
-        id: "r4",
-        name: "Fisherman's Wharf",
-        destination: "goa",
-        cuisine: "Goan Seafood",
-        priceRange: "₹₹₹",
-        specialty: "Fish Recheado",
-        mealType: "lunch",
-    },
-    {
-        id: "r5",
-        name: "Brittos",
-        destination: "goa",
-        cuisine: "Beach Shack",
-        priceRange: "₹₹",
-        specialty: "Prawns Balchao",
-        mealType: "dinner",
-    },
-    {
-        id: "r6",
-        name: "Cafe Chocolatti",
-        destination: "goa",
-        cuisine: "Cafe",
-        priceRange: "₹",
-        specialty: "Breakfast Platter",
-        mealType: "breakfast",
-    },
+    // Turkey
+    { id: "r_tr1", name: "Nusr-Et Steakhouse", destination: "turkey_pkg", cuisine: "Steak", priceRange: "₹₹₹", specialty: "Gold Steak", mealType: "dinner" },
+    { id: "r_tr2", name: "Hafiz Mustafa", destination: "turkey_pkg", cuisine: "Dessert", priceRange: "₹", specialty: "Baklava", mealType: "breakfast" },
 
-    // Rajasthan Restaurants
-    {
-        id: "r7",
-        name: "Chokhi Dhani",
-        destination: "rajasthan",
-        cuisine: "Rajasthani",
-        priceRange: "₹₹₹",
-        specialty: "Dal Baati Churma",
-        mealType: "dinner",
-    },
-    {
-        id: "r8",
-        name: "LMB (Laxmi Mishthan Bhandar)",
-        destination: "rajasthan",
-        cuisine: "Vegetarian Rajasthani",
-        priceRange: "₹₹",
-        specialty: "Rajasthani Thali",
-        mealType: "lunch",
-    },
-    {
-        id: "r9",
-        name: "Tapri Central",
-        destination: "rajasthan",
-        cuisine: "Cafe",
-        priceRange: "₹",
-        specialty: "Kulhad Tea & Snacks",
-        mealType: "breakfast",
-    },
+    // Greece
+    { id: "r_gr1", name: "Kiki's Tavern", destination: "greece_pkg", cuisine: "Greek", priceRange: "₹₹", specialty: "Grilled Octopus", mealType: "lunch" },
+    { id: "r_gr2", name: "Ambrosia", destination: "greece_pkg", cuisine: "Mediterranean", priceRange: "₹₹₹", specialty: "Seafood", mealType: "dinner" },
 
-    // Kashmir Restaurants
-    {
-        id: "r10",
-        name: "Ahdoos Restaurant",
-        destination: "kashmir",
-        cuisine: "Kashmiri",
-        priceRange: "₹₹₹",
-        specialty: "Wazwan",
-        mealType: "dinner",
-    },
-    {
-        id: "r11",
-        name: "Mughal Darbar",
-        destination: "kashmir",
-        cuisine: "Kashmiri",
-        priceRange: "₹₹",
-        specialty: "Rogan Josh",
-        mealType: "lunch",
-    },
-    {
-        id: "r12",
-        name: "Chai Jaai",
-        destination: "kashmir",
-        cuisine: "Cafe",
-        priceRange: "₹",
-        specialty: "Kahwa & Pastries",
-        mealType: "breakfast",
-    },
+    // Paris
+    { id: "r_pa1", name: "Cafe de Flore", destination: "paris_pkg", cuisine: "Cafe", priceRange: "₹₹", specialty: "Hot Chocolate", mealType: "breakfast" },
+    { id: "r_pa2", name: "L'Ambroisie", destination: "paris_pkg", cuisine: "French", priceRange: "₹₹₹", specialty: "Haute Cuisine", mealType: "dinner" },
 
-    // Ladakh Restaurants
-    {
-        id: "r13",
-        name: "Bon Appetit",
-        destination: "ladakh",
-        cuisine: "Multi-Cuisine",
-        priceRange: "₹₹₹",
-        specialty: "Rooftop Dining",
-        mealType: "dinner",
-    },
-    {
-        id: "r14",
-        name: "Tibetan Kitchen",
-        destination: "ladakh",
-        cuisine: "Tibetan",
-        priceRange: "₹₹",
-        specialty: "Thukpa & Momos",
-        mealType: "lunch",
-    },
-    {
-        id: "r15",
-        name: "Gesmo Restaurant",
-        destination: "ladakh",
-        cuisine: "Bakery & Cafe",
-        priceRange: "₹",
-        specialty: "Fresh Baked Goods",
-        mealType: "breakfast",
-    },
+    // Switzerland
+    { id: "r_sw1", name: "Restaurant Chalet", destination: "swiss_pkg", cuisine: "Swiss", priceRange: "₹₹", specialty: "Cheese Fondue", mealType: "dinner" },
+    { id: "r_sw2", name: "Confiserie Sprungli", destination: "swiss_pkg", cuisine: "Cafe", priceRange: "₹₹", specialty: "Luxemburgerli", mealType: "breakfast" },
+
+    // Bali
+    { id: "r_ba1", name: "Potato Head Beach Club", destination: "bali_pkg", cuisine: "International", priceRange: "₹₹", specialty: "Cocktails", mealType: "dinner" },
+    { id: "r_ba2", name: "Naughty Nuri's", destination: "bali_pkg", cuisine: "BBQ", priceRange: "₹", specialty: "Ribs", mealType: "lunch" },
+
+    // Thailand
+    { id: "r_th1", name: "Jay Fai", destination: "thailand_pkg", cuisine: "Street Food", priceRange: "₹₹", specialty: "Crab Omelette", mealType: "lunch" },
+    { id: "r_th2", name: "Blue Elephant", destination: "thailand_pkg", cuisine: "Thai", priceRange: "₹₹₹", specialty: "Royal Thai Cuisine", mealType: "dinner" },
+
+    // Dubai
+    { id: "r_du1", name: "Pierchic", destination: "dubai_pkg", cuisine: "Seafood", priceRange: "₹₹₹", specialty: "Overwater Dining", mealType: "dinner" },
+    { id: "r_du2", name: "Arabian Tea House", destination: "dubai_pkg", cuisine: "Emirati", priceRange: "₹₹", specialty: "Traditional Breakfast", mealType: "breakfast" },
+
+    // Singapore
+    { id: "r_si1", name: "Jumbo Seafood", destination: "singapore_pkg", cuisine: "Seafood", priceRange: "₹₹", specialty: "Chilli Crab", mealType: "dinner" },
+    { id: "r_si2", name: "Tian Tian Chicken Rice", destination: "singapore_pkg", cuisine: "Hawker", priceRange: "₹", specialty: "Hainanese Chicken", mealType: "lunch" },
+
+    // Maldives
+    { id: "r_ma1", name: "Ithaa Undersea", destination: "maldives_pkg", cuisine: "European", priceRange: "₹₹₹", specialty: "Underwater View", mealType: "dinner" },
+    { id: "r_ma2", name: "Muraka", destination: "maldives_pkg", cuisine: "Seafood", priceRange: "₹₹₹", specialty: "Sunset Dinner", mealType: "dinner" },
 ];
 
-// Helper functions to filter data
-export const getHotelsByDestination = (destinationId: string) =>
-    hotels.filter((hotel) => hotel.destination === destinationId);
-
-export const getActivitiesByDestination = (destinationId: string) =>
-    activities.filter((activity) => activity.destination === destinationId);
-
-export const getRestaurantsByDestination = (destinationId: string) =>
-    restaurants.filter((restaurant) => restaurant.destination === destinationId);
-
-export const getDestinationById = (id: string) =>
-    destinations.find((dest) => dest.id === id);
+// Re-export helpers
+export const getHotelsByDestination = (destinationId: string) => hotels.filter((hotel) => hotel.destination === destinationId);
+export const getActivitiesByDestination = (destinationId: string) => activities.filter((activity) => activity.destination === destinationId);
+export const getRestaurantsByDestination = (destinationId: string) => restaurants.filter((restaurant) => restaurant.destination === destinationId);
+export const getDestinationById = (id: string) => destinations.find((dest) => dest.id === id);

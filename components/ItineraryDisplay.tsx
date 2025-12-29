@@ -32,31 +32,55 @@ export default function ItineraryDisplay({
                     </button>
                 </div>
 
-                {/* Budget Summary */}
-                <div className="bg-gradient-to-r from-orange-500 to-amber-600 text-white rounded-2xl p-6">
-                    <div className="flex items-center justify-between">
-                        <div>
-                            <p className="text-orange-100 mb-1">Estimated Total Cost</p>
-                            <p className="text-4xl font-bold">
-                                ₹{itinerary.itinerary.reduce((acc, day) => acc +
-                                    (day.morning?.cost || 0) +
-                                    (day.afternoon?.cost || 0) +
-                                    (day.evening?.cost || 0) +
-                                    (day.hotelCost || 0) +
-                                    (day.mealsCost || 0), 0).toLocaleString()}
+                <h2 className="text-3xl font-bold text-gray-800 mb-2">
+                    Your {itinerary.destination} Journey
+                </h2>
+                <div className="flex flex-wrap items-center gap-4 text-gray-600 mb-6">
+                    <span className="flex items-center gap-2 bg-orange-50 px-3 py-1 rounded-full text-orange-700 font-medium">
+                        🗓️ {itinerary.travelMonth || "Flexible"}
+                    </span>
+                    <span className="flex items-center gap-2 bg-orange-50 px-3 py-1 rounded-full text-orange-700 font-medium">
+                        ⏱️ {itinerary.days} Days
+                    </span>
+                    {itinerary.flightDetails && (
+                        <span className="flex items-center gap-2 bg-orange-50 px-3 py-1 rounded-full text-orange-700 font-medium">
+                            ✈️ Flights Included
+                        </span>
+                    )}
+                </div>
+
+                {/* Total Cost Card */}
+                <div className="bg-gradient-to-r from-orange-600 to-amber-600 rounded-2xl p-6 text-white shadow-xl mb-8 flex flex-col md:flex-row justify-between items-center">
+                    <div>
+                        <p className="text-orange-100 mb-1">Estimated Trip Total</p>
+                        <p className="text-4xl font-bold">
+                            ₹{((itinerary.itinerary.reduce((acc, day) => acc +
+                                (day.morning?.cost || 0) +
+                                (day.afternoon?.cost || 0) +
+                                (day.evening?.cost || 0) +
+                                (day.hotelCost || 0) +
+                                (day.meals?.breakfast?.cost || 0) +
+                                (day.meals?.lunch?.cost || 0) +
+                                (day.meals?.dinner?.cost || 0), 0) + (itinerary.flightDetails?.totalFlightCost || 0))).toLocaleString()}
+                        </p>
+                        {itinerary.flightDetails && (
+                            <p className="text-sm text-orange-100 mt-1">
+                                Includes round-trip flights from {itinerary.flightDetails.departureCity} (₹{itinerary.flightDetails.totalFlightCost.toLocaleString()})
                             </p>
-                        </div>
-                        <div className="text-right">
-                            <p className="text-orange-100 mb-1">Per Person</p>
-                            <p className="text-2xl font-semibold">
-                                ₹{Math.round(itinerary.itinerary.reduce((acc, day) => acc +
-                                    (day.morning?.cost || 0) +
-                                    (day.afternoon?.cost || 0) +
-                                    (day.evening?.cost || 0) +
-                                    (day.hotelCost || 0) +
-                                    (day.mealsCost || 0), 0) / 2).toLocaleString()}
-                            </p>
-                        </div>
+                        )}
+                    </div>
+                    <div className="text-right mt-4 md:mt-0">
+                        <p className="text-orange-100 mb-1">Per Person</p>
+                        <p className="text-2xl font-semibold">
+                            ₹{Math.round(((itinerary.itinerary.reduce((acc, day) => acc +
+                                (day.morning?.cost || 0) +
+                                (day.afternoon?.cost || 0) +
+                                (day.evening?.cost || 0) +
+                                (day.hotelCost || 0) +
+                                (day.meals?.breakfast?.cost || 0) +
+                                (day.meals?.lunch?.cost || 0) +
+                                (day.meals?.dinner?.cost || 0), 0) + (itinerary.flightDetails?.totalFlightCost || 0)) / (itinerary.travelers || 1))).toLocaleString()}
+                        </p>
                     </div>
                 </div>
             </div>
@@ -84,112 +108,161 @@ export default function ItineraryDisplay({
                                         (day.afternoon?.cost || 0) +
                                         (day.evening?.cost || 0) +
                                         (day.hotelCost || 0) +
-                                        (day.mealsCost || 0)).toLocaleString()}
+                                        (day.meals?.breakfast?.cost || 0) +
+                                        (day.meals?.lunch?.cost || 0) +
+                                        (day.meals?.dinner?.cost || 0)).toLocaleString()}
                                 </p>
                             </div>
                         </div>
 
                         {/* Activities Timeline */}
                         <div className="space-y-4 mb-6">
-                            {/* Morning */}
-                            {day.morning && (
-                                <div className="flex">
-                                    <div className="flex flex-col items-center mr-4">
-                                        <div className="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center">
-                                            <span className="text-xl">🌅</span>
-                                        </div>
-                                        <div className="w-1 h-full bg-gradient-to-b from-yellow-200 to-orange-200 mt-2"></div>
+                            {/* Morning & Breakfast */}
+                            <div className="flex">
+                                <div className="flex flex-col items-center mr-4">
+                                    <div className="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center">
+                                        <span className="text-xl">🌅</span>
                                     </div>
-                                    <div className="flex-1 pb-4">
-                                        <div className="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-2xl p-6 border border-yellow-100">
-                                            <div className="flex justify-between items-start mb-2">
-                                                <h4 className="text-lg font-bold text-gray-800">Morning</h4>
-                                                <span className="text-sm font-semibold text-orange-600">
-                                                    {day.morning.time}
-                                                </span>
-                                            </div>
-                                            <p className="text-gray-700 mb-2">{day.morning.activity}</p>
-                                            <p className="text-orange-600 font-semibold">
-                                                ₹{day.morning.cost?.toLocaleString() || "N/A"}
-                                            </p>
-                                        </div>
-                                    </div>
+                                    <div className="w-1 h-full bg-gradient-to-b from-yellow-200 to-orange-200 mt-2"></div>
                                 </div>
-                            )}
+                                <div className="flex-1 pb-4">
+                                    <div className="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-2xl p-6 border border-yellow-100">
+                                        <div className="flex justify-between items-start mb-4">
+                                            <h4 className="text-lg font-bold text-gray-800">Morning</h4>
+                                            <span className="text-sm font-semibold text-orange-600">
+                                                {day.morning?.time || "09:00 AM"}
+                                            </span>
+                                        </div>
 
-                            {/* Afternoon */}
-                            {day.afternoon && (
-                                <div className="flex">
-                                    <div className="flex flex-col items-center mr-4">
-                                        <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                                            <span className="text-xl">☀️</span>
-                                        </div>
-                                        <div className="w-1 h-full bg-gradient-to-b from-blue-200 to-indigo-200 mt-2"></div>
-                                    </div>
-                                    <div className="flex-1 pb-4">
-                                        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-100">
-                                            <div className="flex justify-between items-start mb-2">
-                                                <h4 className="text-lg font-bold text-gray-800">Afternoon</h4>
-                                                <span className="text-sm font-semibold text-blue-600">
-                                                    {day.afternoon.time}
-                                                </span>
+                                        {/* Breakfast */}
+                                        {day.meals?.breakfast && (
+                                            <div className="mb-4 pb-4 border-b border-orange-200/50">
+                                                <div className="flex justify-between items-start">
+                                                    <div>
+                                                        <span className="text-xs font-bold uppercase text-orange-400 tracking-wider">Breakfast</span>
+                                                        <p className="text-gray-800 font-medium">{day.meals.breakfast.item}</p>
+                                                    </div>
+                                                    <p className="text-orange-600 font-bold whitespace-nowrap ml-4">
+                                                        ₹{day.meals.breakfast.cost?.toLocaleString() || "0"}
+                                                    </p>
+                                                </div>
                                             </div>
-                                            <p className="text-gray-700 mb-2">{day.afternoon.activity}</p>
-                                            <p className="text-blue-600 font-semibold">
-                                                ₹{day.afternoon.cost?.toLocaleString() || "N/A"}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
+                                        )}
 
-                            {/* Evening */}
-                            {day.evening && (
-                                <div className="flex">
-                                    <div className="flex flex-col items-center mr-4">
-                                        <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
-                                            <span className="text-xl">🌆</span>
-                                        </div>
-                                    </div>
-                                    <div className="flex-1">
-                                        <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-6 border border-purple-100">
-                                            <div className="flex justify-between items-start mb-2">
-                                                <h4 className="text-lg font-bold text-gray-800">Evening</h4>
-                                                <span className="text-sm font-semibold text-purple-600">
-                                                    {day.evening.time}
-                                                </span>
+                                        {/* Activity */}
+                                        <div>
+                                            <span className="text-xs font-bold uppercase text-orange-400 tracking-wider">Activity</span>
+                                            <div className="flex justify-between items-start">
+                                                <p className="text-gray-700">{day.morning?.activity}</p>
+                                                <p className="text-orange-600 font-semibold whitespace-nowrap ml-4">
+                                                    ₹{day.morning?.cost?.toLocaleString() || "0"}
+                                                </p>
                                             </div>
-                                            <p className="text-gray-700 mb-2">{day.evening.activity}</p>
-                                            <p className="text-purple-600 font-semibold">
-                                                ₹{day.evening.cost?.toLocaleString() || "N/A"}
-                                            </p>
                                         </div>
                                     </div>
                                 </div>
-                            )}
+                            </div>
+
+                            {/* Afternoon & Lunch */}
+                            <div className="flex">
+                                <div className="flex flex-col items-center mr-4">
+                                    <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                                        <span className="text-xl">☀️</span>
+                                    </div>
+                                    <div className="w-1 h-full bg-gradient-to-b from-blue-200 to-indigo-200 mt-2"></div>
+                                </div>
+                                <div className="flex-1 pb-4">
+                                    <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-100">
+                                        <div className="flex justify-between items-start mb-4">
+                                            <h4 className="text-lg font-bold text-gray-800">Noon</h4>
+                                            <span className="text-sm font-semibold text-blue-600">
+                                                {day.afternoon?.time || "01:00 PM"}
+                                            </span>
+                                        </div>
+
+                                        {/* Lunch */}
+                                        {day.meals?.lunch && (
+                                            <div className="mb-4 pb-4 border-b border-blue-200/50">
+                                                <div className="flex justify-between items-start">
+                                                    <div>
+                                                        <span className="text-xs font-bold uppercase text-blue-400 tracking-wider">Lunch</span>
+                                                        <p className="text-gray-800 font-medium">{day.meals.lunch.item}</p>
+                                                    </div>
+                                                    <p className="text-blue-600 font-bold whitespace-nowrap ml-4">
+                                                        ₹{day.meals.lunch.cost?.toLocaleString() || "0"}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        {/* Activity */}
+                                        <div>
+                                            <span className="text-xs font-bold uppercase text-blue-400 tracking-wider">Activity</span>
+                                            <div className="flex justify-between items-start">
+                                                <p className="text-gray-700">{day.afternoon?.activity}</p>
+                                                <p className="text-blue-600 font-semibold whitespace-nowrap ml-4">
+                                                    ₹{day.afternoon?.cost?.toLocaleString() || "0"}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Evening & Dinner */}
+                            <div className="flex">
+                                <div className="flex flex-col items-center mr-4">
+                                    <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                                        <span className="text-xl">🌆</span>
+                                    </div>
+                                </div>
+                                <div className="flex-1">
+                                    <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-6 border border-purple-100">
+                                        <div className="flex justify-between items-start mb-4">
+                                            <h4 className="text-lg font-bold text-gray-800">Evening</h4>
+                                            <span className="text-sm font-semibold text-purple-600">
+                                                {day.evening?.time || "07:00 PM"}
+                                            </span>
+                                        </div>
+
+                                        {/* Dinner */}
+                                        {day.meals?.dinner && (
+                                            <div className="mb-4 pb-4 border-b border-purple-200/50">
+                                                <div className="flex justify-between items-start">
+                                                    <div>
+                                                        <span className="text-xs font-bold uppercase text-purple-400 tracking-wider">Dinner</span>
+                                                        <p className="text-gray-800 font-medium">{day.meals.dinner.item}</p>
+                                                    </div>
+                                                    <p className="text-purple-600 font-bold whitespace-nowrap ml-4">
+                                                        ₹{day.meals.dinner.cost?.toLocaleString() || "0"}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        {/* Activity */}
+                                        <div>
+                                            <span className="text-xs font-bold uppercase text-purple-400 tracking-wider">Activity</span>
+                                            <div className="flex justify-between items-start">
+                                                <p className="text-gray-700">{day.evening?.activity}</p>
+                                                <p className="text-purple-600 font-semibold whitespace-nowrap ml-4">
+                                                    ₹{day.evening?.cost?.toLocaleString() || "0"}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
-                        {/* Hotel and Meals */}
-                        <div className="grid md:grid-cols-2 gap-4 mt-6 pt-6 border-t border-gray-200">
+                        {/* Hotel Only */}
+                        <div className="mt-6 pt-6 border-t border-gray-200">
                             <div className="bg-gray-50 rounded-xl p-4 relative overflow-hidden group">
                                 <div className="absolute top-0 right-0 bg-orange-100 px-3 py-1 rounded-bl-xl text-orange-700 font-bold text-sm">
                                     ₹{day.hotelCost?.toLocaleString() || "Included"}
                                 </div>
                                 <p className="text-sm text-gray-500 mb-1">🏨 Hotel</p>
                                 <p className="font-semibold text-gray-800 pr-12">{day.hotel}</p>
-                            </div>
-                            <div className="bg-gray-50 rounded-xl p-4 relative overflow-hidden group">
-                                <div className="absolute top-0 right-0 bg-orange-100 px-3 py-1 rounded-bl-xl text-orange-700 font-bold text-sm">
-                                    ₹{day.mealsCost?.toLocaleString() || "Included"}
-                                </div>
-                                <p className="text-sm text-gray-500 mb-2">🍽️ Meals</p>
-                                <div className="text-sm text-gray-700 space-y-1">
-                                    {day.meals?.breakfast && (
-                                        <p>• Breakfast: {day.meals.breakfast}</p>
-                                    )}
-                                    {day.meals?.lunch && <p>• Lunch: {day.meals.lunch}</p>}
-                                    {day.meals?.dinner && <p>• Dinner: {day.meals.dinner}</p>}
-                                </div>
                             </div>
                         </div>
                     </div>

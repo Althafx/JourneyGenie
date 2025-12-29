@@ -42,12 +42,17 @@ export async function POST(request: NextRequest) {
             ? activities.filter((activity) => preferences.includes(activity.category))
             : activities;
 
-        // Create AI prompt with Switrus data
-        const prompt = `You are a travel planning AI for Switrus Holidays, a premium travel agency. Generate a detailed ${days}-day itinerary for ${destinationData.name} for ${travelers} traveler(s) with a total budget of ₹${budget.toLocaleString()}.
+        // Create AI prompt with JourneyGenie data
+        const prompt = `You are JourneyGenie, an expert international travel planner. Generate a detailed ${days}-day itinerary for ${destinationData.name} for ${travelers} traveler(s) in ${body.travelMonth}.
+        
+        SELECTED PACKAGE TIER: ${body.packageTier} (Budget Limit: ₹${budget.toLocaleString()})
+        ${body.includeFlights ? `IMPORTANT: The user wants to fly from ${body.departureCity}. 
+        USE THIS EXACT ESTIMATED FLIGHT COST: ₹${body.estimatedFlightCost} per person.
+        Add this to the total itinerary cost. The package budget of ₹${budget} is for LAND arrangements only.` : "Flights are NOT included."}
 
-IMPORTANT: Use ONLY the following Switrus partner options:
+IMPORTANT: Use ONLY the following curated partner options matching the ${body.packageTier} tier:
 
-HOTELS (Select based on budget):
+HOTELS (Prioritize ${body.packageTier === "Luxury" ? "Luxury/5-Star" : body.packageTier === "Standard" ? "Mid-range/4-Star" : "Budget/Hostels"}):
 ${hotels.map(h => `- ${h.name} (₹${h.pricePerNight}/night, ${h.type}, Rating: ${h.rating}/5, Amenities: ${h.amenities.join(", ")})`).join("\n")}
 
 ACTIVITIES (Select based on preferences):
@@ -62,56 +67,38 @@ Create a day-by-day itinerary in JSON format with the following structure:
 {
   "destination": "${destinationData.name}",
   "days": ${days},
-  "totalBudget": <calculated total>,
+  "travelers": ${travelers},
+  "travelMonth": "${body.travelMonth}",
+  ${body.includeFlights ? `"flightDetails": { "departureCity": "${body.departureCity}", "estimatedCostPerPerson": ${body.estimatedFlightCost}, "totalFlightCost": ${body.estimatedFlightCost! * travelers} },` : ""}
   "itinerary": [
     {
       "day": 1,
       "date": "Day 1",
-      "morning": {
-        "activity": "<activity name from the list above>",
-        "time": "<time>",
-        "cost": <cost>
+      "morning": { "activity": "...", "time": "...", "cost": ... },
+      "afternoon": { "activity": "...", "time": "...", "cost": ... },
+      "evening": { "activity": "...", "time": "...", "cost": ... },
+      "hotel": "...",
+      "hotelCost": ...,
+      "meals": { 
+        "breakfast": { "item": "...", "cost": ... }, 
+        "lunch": { "item": "...", "cost": ... }, 
+        "dinner": { "item": "...", "cost": ... } 
       },
-      "afternoon": {
-        "activity": "<activity name from the list above>",
-        "time": "<time>",
-        "cost": <cost>
-      },
-      "evening": {
-        "activity": "<activity name from the list above>",
-        "time": "<time>",
-        "cost": <cost>
-      },
-      "hotel": "<hotel name from the list above>",
-      "meals": {
-        "breakfast": "<restaurant name>",
-        "lunch": "<restaurant name>",
-        "dinner": "<restaurant name>"
-      },
-      "totalCost": <sum of all costs for the day>
+      "totalCost": ...
     }
   ],
-  "tips": [
-    "<travel tip 1>",
-    "<travel tip 2>",
-    "<travel tip 3>",
-    "<travel tip 4>",
-    "<travel tip 5>"
-  ]
+  "tips": ["..."]
 }
 
 CRITICAL RULES:
-1. Use ONLY hotels, activities, and restaurants from the lists provided above
-2. Ensure total budget stays within ₹${budget} (±10% is acceptable)
-3. Select hotel based on budget: budget hotels for low budgets, luxury for high budgets
-4. Distribute activities smartly: morning activities best done in morning, etc.
-5. Don't repeat the same activity
-6. Include realistic costs for each activity
-7. Make sure meals match the restaurant's mealType
-8. Provide 5 practical travel tips specific to ${destinationData.name}
-9. Return ONLY valid JSON, no additional text
-
-Generate the complete itinerary now:`;
+1. Use curated partner options where possible, BUT YOU MUST GENERATE other highly-rated, real-world authentic options matching the ${body.packageTier} tier to fill the itinerary.
+2. Ensure total budget stays within ₹${budget}.
+3. **HOTEL LOGIC**: If the itinerary moves to a new city, YOU MUST SWITCH to a hotel in that city. Use real hotel names.
+4. **ZERO REPETITION**: NEVER repeat a restaurant name. Suggest a DIFFERENT authentic spot for every single meal.
+5. **AUTHENTICITY**: For 'item', write the specific dish AND restaurant (e.g., "Masala Dosa at Saravana Bhavan").
+6. **DISTINCT ACTIVITIES**: 'Morning', 'Afternoon', and 'Evening' activities MUST be non-meal experiences (sightseeing, adventure, culture). DO NOT duplicate the meal as the activity.
+7. Provide 5 practical travel tips specific to ${destinationData.name} in ${body.travelMonth}
+8. Return ONLY valid JSON, no additional text`;
 
         // Call Groq API
         const completion = await groq.chat.completions.create({

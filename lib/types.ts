@@ -1,5 +1,12 @@
 // TypeScript interfaces for our travel data models
 
+export interface PackageTier {
+  name: "Economy" | "Standard" | "Luxury";
+  price: number;
+  description: string;
+  inclusions: string[];
+}
+
 export interface Destination {
   id: string;
   name: string;
@@ -10,6 +17,7 @@ export interface Destination {
     min: number;
     max: number;
   };
+  packages: PackageTier[];
 }
 
 export interface Hotel {
@@ -48,12 +56,13 @@ export interface TravelPreferences {
   destination: string;
   days: number;
   budget: number;
-  travelDates: {
-    start: string;
-    end: string;
-  };
+  travelMonth: string;
   travelers: number;
   preferences: string[];
+  includeFlights: boolean;
+  departureCity?: string;
+  packageTier: "Economy" | "Standard" | "Luxury";
+  estimatedFlightCost?: number;
 }
 
 export interface ItineraryDay {
@@ -77,9 +86,9 @@ export interface ItineraryDay {
   hotel: string;
   hotelCost: number;
   meals: {
-    breakfast?: string;
-    lunch?: string;
-    dinner?: string;
+    breakfast?: { item: string; cost: number };
+    lunch?: { item: string; cost: number };
+    dinner?: { item: string; cost: number };
   };
   mealsCost: number;
   totalCost: number;
@@ -89,6 +98,13 @@ export interface Itinerary {
   destination: string;
   days: number;
   totalBudget: number;
+  travelers: number;
+  travelMonth?: string;
+  flightDetails?: {
+    departureCity: string;
+    estimatedCostPerPerson: number;
+    totalFlightCost: number;
+  };
   itinerary: ItineraryDay[];
   tips: string[];
 }
