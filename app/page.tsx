@@ -114,22 +114,12 @@ export default function Home() {
             <div>
               <h3 className="text-2xl font-bold mb-4">JourneyGenie</h3>
               <p className="text-orange-100">
-                Creating unforgettable travel experiences since 2010
+                Your dream trip, planned in seconds
               </p>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">Quick Links</h4>
-              <ul className="space-y-2 text-orange-100">
-                <li>About Us</li>
-                <li>Destinations</li>
-                <li>Contact</li>
-                <li>Terms & Conditions</li>
-              </ul>
             </div>
             <div>
               <h4 className="font-semibold mb-4">Contact</h4>
               <p className="text-orange-100">Email: hello@journeygenie.ai</p>
-              <p className="text-orange-100">Phone: +91 1800-123-4567</p>
             </div>
           </div>
           <div className="mt-8 pt-8 border-t border-orange-700 text-center text-orange-200">
