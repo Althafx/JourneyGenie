@@ -121,6 +121,10 @@ export default function Home() {
               <h4 className="font-semibold mb-4">Contact</h4>
               <p className="text-orange-100">Email: hello@journeygenie.ai</p>
             </div>
+            <div>
+              <h4 className="font-semibold mb-4">Created by</h4>
+              <p className="text-orange-100">Althaf</p>
+            </div>
           </div>
           <div className="mt-8 pt-8 border-t border-orange-700 text-center text-orange-200">
             <p>© 2024 JourneyGenie. All rights reserved.</p>
